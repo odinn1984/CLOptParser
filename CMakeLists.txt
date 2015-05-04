@@ -7,6 +7,7 @@ set(CMAKE_VERBOSE_MAKEFILE TRUE)
 set(CMAKE_SKIP_BUILD_RPATH TRUE)
 set(Boost_USE_STATIC_LIBS OFF)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE}")
 
 find_package(Boost COMPONENTS log REQUIRED)
 
@@ -20,8 +21,12 @@ if(Boost_FOUND)
 endif()
 
 set(SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
-set(SOURCE_FILES ${SOURCE_DIR}/main.cpp ${SOURCE_DIR}/optgroup.cpp ${SOURCE_DIR}/option.cpp ${SOURCE_DIR}/optparser.cpp ${SOURCE_DIR}/opexception.cpp)
+set(EXAMPLE_DIR "${PROJECT_SOURCE_DIR}/examples")
+set(SOURCE_FILES ${SOURCE_DIR}/optgroup.cpp ${SOURCE_DIR}/option.cpp ${SOURCE_DIR}/optparser.cpp ${SOURCE_DIR}/opexception.cpp)
 set(HEADER_FILES ${SOURCE_DIR}/option.hpp ${SOURCE_DIR}/optparser.hpp ${SOURCE_DIR}/optgroup.hpp ${SOURCE_DIR}/opexception.hpp)
 
-add_executable(CLOptParser ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(CLOptParser ${Boost_LOG_LIBRARIES})
+add_library(clop SHARED ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(clop ${Boost_LOG_LIBRARIES})
+
+add_executable(CLOptParser ${EXAMPLE_DIR}/basic.cpp)
+target_link_libraries(CLOptParser ${Boost_LOG_LIBRARIES} clop)
