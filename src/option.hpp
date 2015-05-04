@@ -6,6 +6,8 @@
 #include <boost/any.hpp>
 #include <boost/lexical_cast.hpp>
 
+#include "opexception.hpp"
+
 typedef int num_option_t;
 typedef std::string str_option_t;
 typedef bool flag_option_t;

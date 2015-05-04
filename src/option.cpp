@@ -4,14 +4,12 @@ cloptparser::Option *cloptparser::Option::optionFactory(int type) {
     switch(type) {
         case cloptparser::Option::NUM_TYPE:
             return new OptionNumber();
-            break;
         case cloptparser::Option::STRING_TYPE:
             break;
         case cloptparser::Option::FLAG_TYPE:
             break;
         default:
-            // TODO: Consider adding exception on un-supported option type
-            return nullptr;
+            throw cloptparser::InvalidOptionTypeProvided();
     }
 
     return nullptr;

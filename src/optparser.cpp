@@ -92,7 +92,7 @@ void cloptparser::CLOptParser::parse() {
     }
 
     if(parsingError) {
-        std::cout << "Error: " << errorMsg << std::endl;
+        std::cerr << "Error: " << errorMsg << std::endl;
         printHelpMessage();
         return;
     }

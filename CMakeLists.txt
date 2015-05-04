@@ -22,7 +22,7 @@ endif()
 
 set(SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
 set(EXAMPLE_DIR "${PROJECT_SOURCE_DIR}/examples")
-set(SOURCE_FILES ${SOURCE_DIR}/optgroup.cpp ${SOURCE_DIR}/option.cpp ${SOURCE_DIR}/optparser.cpp ${SOURCE_DIR}/opexception.cpp)
+set(SOURCE_FILES ${SOURCE_DIR}/optgroup.cpp ${SOURCE_DIR}/option.cpp ${SOURCE_DIR}/optparser.cpp)
 set(HEADER_FILES ${SOURCE_DIR}/option.hpp ${SOURCE_DIR}/optparser.hpp ${SOURCE_DIR}/optgroup.hpp ${SOURCE_DIR}/opexception.hpp)
 
 add_library(clop SHARED ${SOURCE_FILES} ${HEADER_FILES})

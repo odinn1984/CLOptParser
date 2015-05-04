@@ -1,14 +1,24 @@
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 #include "../src/optparser.hpp"
 
 using namespace std;
 using namespace cloptparser;
 
 int main(int argc, char **argv) {
-    Option *a = Option::optionFactory(Option::NUM_TYPE);
-    Option *b = Option::optionFactory(Option::NUM_TYPE);
-    Option *c = Option::optionFactory(Option::NUM_TYPE);
+    Option *a, *b, *c;
+
+    try {
+        a = Option::optionFactory(Option::NUM_TYPE);
+        b = Option::optionFactory(Option::NUM_TYPE);
+        c = Option::optionFactory(Option::NUM_TYPE);
+    } catch(InvalidOptionTypeProvided ex) {
+        cerr << ex.what() << endl;
+
+        return EXIT_FAILURE;
+    }
+
     OptGroup *g = new OptGroup("General Options");
 
     a->setValue("5");
@@ -45,5 +55,5 @@ int main(int argc, char **argv) {
     cout << "Current number of procs: " << b->Value<num_option_t>() << endl;
     cout << "Current mandatory: " << c->Value<num_option_t>() << endl;
 
-    return 0;
+    return EXIT_SUCCESS;
 }
