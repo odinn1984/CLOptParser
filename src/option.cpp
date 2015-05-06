@@ -5,9 +5,9 @@ cloptparser::Option *cloptparser::Option::optionFactory(int type) {
         case cloptparser::Option::NUM_TYPE:
             return new OptionNumber();
         case cloptparser::Option::STRING_TYPE:
-            break;
+            return new OptionString();
         case cloptparser::Option::FLAG_TYPE:
-            break;
+            return new OptionFlag();
         default:
             throw cloptparser::InvalidOptionTypeProvided();
     }
@@ -33,7 +33,6 @@ cloptparser::OptionNumber::OptionNumber() {
     defaultValue = 0;
     value = defaultValue;
 }
-
 cloptparser::OptionNumber::~OptionNumber() {}
 
 void cloptparser::OptionNumber::setValue(std::string val) { value = boost::lexical_cast<num_option_t>(val); }
@@ -56,3 +55,63 @@ void cloptparser::OptionNumber::printHelpMessage() {
               << " [DEFAULT: " << DefaultValue<num_option_t>() << "]"
               << std::endl;
 }
+
+/**
+ * String Option Class Method Implementations
+ */
+cloptparser::OptionString::OptionString() {
+    defaultValue = "";
+    value = defaultValue;
+}
+cloptparser::OptionString::~OptionString() {}
+
+void cloptparser::OptionString::setValue(std::string val) { value = boost::lexical_cast<str_option_t>(val); }
+void cloptparser::OptionString::setDefaultValue(std::string val) { defaultValue = boost::lexical_cast<str_option_t>(val); }
+
+boost::any cloptparser::OptionString::_value() { return value; }
+boost::any cloptparser::OptionString::_defaultValue() { return defaultValue; }
+
+void cloptparser::OptionString::printHelpMessage() {
+    std::string seperator = "";
+
+    if(ShortName() != "" && LongName() != "")
+        seperator = ", ";
+
+    std::cout << "-" << ShortName() << " STR"
+    << seperator
+    << "--" << LongName() << "=STR"
+    << "\t\t"
+    << HelpMessage()
+    << " [DEFAULT: " << DefaultValue<str_option_t>() << "]"
+    << std::endl;
+}
+
+/**
+ * Flag Option Class Method Implementations
+ */
+cloptparser::OptionFlag::OptionFlag() {
+    defaultValue = false;
+    value = defaultValue;
+}
+cloptparser::OptionFlag::~OptionFlag() {}
+
+void cloptparser::OptionFlag::setValue(std::string val) { value = boost::lexical_cast<flag_option_t>(val); }
+void cloptparser::OptionFlag::setDefaultValue(std::string val) { defaultValue = boost::lexical_cast<flag_option_t>(val); }
+
+boost::any cloptparser::OptionFlag::_value() { return value; }
+boost::any cloptparser::OptionFlag::_defaultValue() { return defaultValue; }
+
+void cloptparser::OptionFlag::printHelpMessage() {
+    std::string seperator = "";
+
+    if(ShortName() != "" && LongName() != "")
+        seperator = ", ";
+
+    std::cout << "-" << ShortName()
+    << seperator
+    << "--" << LongName()
+    << "\t\t"
+    << HelpMessage()
+    << std::endl;
+}
+

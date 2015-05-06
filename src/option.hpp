@@ -63,6 +63,42 @@ namespace cloptparser {
         num_option_t value;
         num_option_t defaultValue;
     };
+
+    class OptionString : public Option {
+    public:
+        OptionString();
+        virtual ~OptionString();
+
+        virtual void setValue(std::string val);
+        virtual void setDefaultValue(std::string val);
+        virtual void printHelpMessage();
+
+    protected:
+        virtual boost::any _value();
+        virtual boost::any _defaultValue();
+
+    private:
+        str_option_t value;
+        str_option_t defaultValue;
+    };
+
+    class OptionFlag : public Option {
+    public:
+        OptionFlag();
+        virtual ~OptionFlag();
+
+        virtual void setValue(std::string val);
+        virtual void setDefaultValue(std::string val);
+        virtual void printHelpMessage();
+
+    protected:
+        virtual boost::any _value();
+        virtual boost::any _defaultValue();
+
+    private:
+        flag_option_t value;
+        flag_option_t defaultValue;
+    };
 };
 
 #endif //_CLOPTPARSER_OPTION_H_

@@ -44,6 +44,8 @@ void cloptparser::CLOptParser::parse() {
             std::string optName = std::string(argv[i]).substr(2, opt.find("=") - 2);
             std::string optValue = std::string(argv[i]).substr(opt.find("=") + 1);
 
+            // TODO: Add special case for flags which don't have values...
+
             BOOST_LOG_TRIVIAL(debug) << "Long Name Attribute: " <<
                                      optName <<
                                      " Got Value: " << optValue;
@@ -61,6 +63,8 @@ void cloptparser::CLOptParser::parse() {
             std::string opt = std::string(argv[i]);
             std::string optName = std::string(argv[i]).substr(1, opt.find(" ") - 1);
             std::string optValue = std::string(argv[++i]);
+
+            // TODO: Add special case for flags which don't have values...
 
             BOOST_LOG_TRIVIAL(debug) << "Short Name Attribute: " <<
                                         optName <<
