@@ -44,8 +44,6 @@ void cloptparser::CLOptParser::parse() {
             std::string optName = std::string(argv[i]).substr(2, opt.find("=") - 2);
             std::string optValue = std::string(argv[i]).substr(opt.find("=") + 1);
 
-            // TODO: Add special case for flags which don't have values...
-
             BOOST_LOG_TRIVIAL(debug) << "Long Name Attribute: " <<
                                      optName <<
                                      " Got Value: " << optValue;
@@ -61,10 +59,8 @@ void cloptparser::CLOptParser::parse() {
         } else if(boost::starts_with(argv[i], "-")) {
             // Short name options
             std::string opt = std::string(argv[i]);
-            std::string optName = std::string(argv[i]).substr(1, opt.find(" ") - 1);
+            std::string optName = std::string(argv[i]).substr(1);
             std::string optValue = std::string(argv[++i]);
-
-            // TODO: Add special case for flags which don't have values...
 
             BOOST_LOG_TRIVIAL(debug) << "Short Name Attribute: " <<
                                         optName <<
@@ -73,6 +69,11 @@ void cloptparser::CLOptParser::parse() {
             try {
                 setValueByName(optName, optValue);
                 shortNameOptionsCount++;
+
+                // Decrease the iteration index since the current value
+                // is another option
+                if(!currentOptionNeedsRValue(optName))
+                    i--;
             } catch(cloptparser::OptionNotFoundException ex) {
                 errorMsg = ex.what();
                 BOOST_LOG_TRIVIAL(error) << errorMsg;
@@ -144,11 +145,25 @@ void cloptparser::CLOptParser::printHelpMessage() {
     }
 }
 
+bool cloptparser::CLOptParser::currentOptionNeedsRValue(std::string name) {
+    cloptparser::Option *tempOpt = option(name);
+
+    if(nullptr == tempOpt)
+        throw cloptparser::OptionNotFoundException(name);
+
+    return tempOpt->rValueNeeded();
+}
+
 void cloptparser::CLOptParser::setValueByName(std::string name, std::string value) {
     cloptparser::Option *tempOpt = option(name);
 
     if(nullptr == tempOpt)
         throw cloptparser::OptionNotFoundException(name);
 
-    tempOpt->setValue(value);
+    if(tempOpt->rValueNeeded()) {
+        tempOpt->setValue(value);
+    } else {
+        // The only place that rValue isn't needed is a flag option
+        tempOpt->setValue(boost::lexical_cast<std::string>(!tempOpt->Value<flag_option_t>()));
+    }
 }

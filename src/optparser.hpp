@@ -36,6 +36,7 @@ namespace cloptparser {
         void printHelpMessage();
 
     private:
+        bool currentOptionNeedsRValue(std::string name);
         void setValueByName(std::string name, std::string value);
 
         int argc;

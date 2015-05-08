@@ -21,6 +21,7 @@ cloptparser::Option *cloptparser::Option::optionFactory(int type) {
 void cloptparser::Option::setLongOptionName(std::string name) { longName = name; }
 void cloptparser::Option::setShortOptionName(std::string name) { shortName = name; }
 void cloptparser::Option::setHelpMessage(std::string message) { helpMessage = message; }
+bool cloptparser::Option::rValueNeeded() { return true; }
 
 std::string cloptparser::Option::LongName() { return longName; }
 std::string cloptparser::Option::ShortName() { return shortName; }
@@ -65,8 +66,8 @@ cloptparser::OptionString::OptionString() {
 }
 cloptparser::OptionString::~OptionString() {}
 
-void cloptparser::OptionString::setValue(std::string val) { value = boost::lexical_cast<str_option_t>(val); }
-void cloptparser::OptionString::setDefaultValue(std::string val) { defaultValue = boost::lexical_cast<str_option_t>(val); }
+void cloptparser::OptionString::setValue(std::string val) { value = val; }
+void cloptparser::OptionString::setDefaultValue(std::string val) { defaultValue = val; }
 
 boost::any cloptparser::OptionString::_value() { return value; }
 boost::any cloptparser::OptionString::_defaultValue() { return defaultValue; }
@@ -97,6 +98,7 @@ cloptparser::OptionFlag::~OptionFlag() {}
 
 void cloptparser::OptionFlag::setValue(std::string val) { value = boost::lexical_cast<flag_option_t>(val); }
 void cloptparser::OptionFlag::setDefaultValue(std::string val) { defaultValue = boost::lexical_cast<flag_option_t>(val); }
+bool cloptparser::OptionFlag::rValueNeeded() { return false; }
 
 boost::any cloptparser::OptionFlag::_value() { return value; }
 boost::any cloptparser::OptionFlag::_defaultValue() { return defaultValue; }

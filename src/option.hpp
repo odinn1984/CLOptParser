@@ -26,6 +26,7 @@ namespace cloptparser {
         virtual void setHelpMessage(std::string message);
         virtual void setValue(std::string val) = 0;
         virtual void setDefaultValue(std::string val) = 0;
+        virtual bool rValueNeeded();
 
         virtual std::string LongName();
         virtual std::string ShortName();
@@ -90,6 +91,7 @@ namespace cloptparser {
         virtual void setValue(std::string val);
         virtual void setDefaultValue(std::string val);
         virtual void printHelpMessage();
+        virtual bool rValueNeeded();
 
     protected:
         virtual boost::any _value();
