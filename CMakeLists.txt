@@ -21,7 +21,7 @@ if(Boost_FOUND)
 endif()
 
 set(SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
-set(EXAMPLE_DIR "${PROJECT_SOURCE_DIR}/examples")
+set(EXAMPLE_DIR "${PROJECT_SOURCE_DIR}/tests")
 set(SOURCE_FILES ${SOURCE_DIR}/optgroup.cpp ${SOURCE_DIR}/option.cpp ${SOURCE_DIR}/optparser.cpp)
 set(HEADER_FILES ${SOURCE_DIR}/option.hpp ${SOURCE_DIR}/optparser.hpp ${SOURCE_DIR}/optgroup.hpp ${SOURCE_DIR}/opexception.hpp)
 
