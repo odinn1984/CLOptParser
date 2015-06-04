@@ -96,12 +96,12 @@ cloptparser::OptionFlag::OptionFlag() {
 }
 cloptparser::OptionFlag::~OptionFlag() {}
 
-void cloptparser::OptionFlag::setValue(std::string val) { value = boost::lexical_cast<flag_option_t>(val); }
-void cloptparser::OptionFlag::setDefaultValue(std::string val) { defaultValue = boost::lexical_cast<flag_option_t>(val); }
+void cloptparser::OptionFlag::setValue(std::string val) { value = (val == "on"); }
+void cloptparser::OptionFlag::setDefaultValue(std::string val) { defaultValue = (val == "on"); }
 bool cloptparser::OptionFlag::rValueNeeded() { return false; }
 
-boost::any cloptparser::OptionFlag::_value() { return value; }
-boost::any cloptparser::OptionFlag::_defaultValue() { return defaultValue; }
+boost::any cloptparser::OptionFlag::_value() { return boost::any_cast<flag_option_t>(value); }
+boost::any cloptparser::OptionFlag::_defaultValue() { return boost::any_cast<flag_option_t>(defaultValue); }
 
 void cloptparser::OptionFlag::printHelpMessage() {
     std::string seperator = "";
