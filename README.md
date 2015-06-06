@@ -6,6 +6,7 @@ Easy to use and simple library to use options with a program like in Python, jus
 * Boost Unit Testing
 * Boost Logs
 
+### Notes
 * An example CMakeFile was provided in this repo to get a starting point of the targets and requirements that this project supports and needs.
 * tests directory contains unit and functional tests that also provide usage examples of this library.
 
