@@ -22,3 +22,17 @@ BOOST_AUTO_TEST_CASE(OptionUpdateDefaultValuesTest) {
     BOOST_CHECK_EQUAL(stropt->DefaultValue<str_option_t>(), "Test");
     BOOST_CHECK_EQUAL(flagopt->DefaultValue<flag_option_t>(), true);
 }
+
+BOOST_AUTO_TEST_CASE(OptionUpdateValuesTest) {
+    Option *intopt = Option::optionFactory(Option::NUM_TYPE);
+    Option *stropt = Option::optionFactory(Option::STRING_TYPE);
+    Option *flagopt = Option::optionFactory(Option::FLAG_TYPE);
+
+    intopt->setValue("5");
+    stropt->setValue("Test");
+    flagopt->setValue("on");
+
+    BOOST_CHECK_EQUAL(intopt->Value<num_option_t>(), 5);
+    BOOST_CHECK_EQUAL(stropt->Value<str_option_t>(), "Test");
+    BOOST_CHECK_EQUAL(flagopt->Value<flag_option_t>(), true);
+}
